@@ -504,7 +504,7 @@ function wireResult(){
 
 /* ---------- auto-save to Parker's Google Sheet ---------- */
 // Apps Script web app URL (ends in /exec). Leave empty to turn auto-save off.
-const SHEET_URL = "";
+const SHEET_URL = "https://script.google.com/macros/s/AKfycbwgObVt7Vbodky1NydKHuY5OIMF4k5IB5uIACGqkgWyoWAYbQUUzeryafME5pa_Wc-z/exec";
 const SENT_KEY = KEY + ":sent";
 async function autoSend(){
   if(!SHEET_URL || !anyPicks()) return;
