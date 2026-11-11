@@ -1,0 +1,536 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+<meta charset="utf-8">
+<meta name="viewport" content="width=device-width, initial-scale=1">
+<meta name="robots" content="noindex, nofollow">
+<title>Maddie's Dream Plate</title>
+<link rel="preconnect" href="https://fonts.googleapis.com">
+<link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+<link href="https://fonts.googleapis.com/css2?family=Bagel+Fat+One&family=Figtree:wght@400;600;800&display=swap" rel="stylesheet">
+<style>
+:root{
+  /* Picnic-tablecloth gingham, sticker-style chips, a plate that fills up as she goes */
+  --bg:#eef3d2;
+  --gingham:rgba(122,170,64,.16);
+  --ink:#2a1838;
+  --paper:#fffdf6;
+  --muted:#6c5f78;
+  --accent:#ff4f7b;
+  --nope:#e4dfe8;
+  --display:"Bagel Fat One", "Cooper Black", Georgia, serif;
+  --body:"Figtree", system-ui, -apple-system, "Segoe UI", sans-serif;
+  color-scheme:light;
+}
+*{box-sizing:border-box}
+[hidden]{display:none!important}
+html,body{margin:0}
+body{
+  background-color:var(--bg);
+  background-image:
+    repeating-linear-gradient(0deg,var(--gingham) 0 22px,transparent 22px 44px),
+    repeating-linear-gradient(90deg,var(--gingham) 0 22px,transparent 22px 44px);
+  color:var(--ink);
+  font-family:var(--body);
+  font-size:16px;
+  line-height:1.45;
+  min-height:100vh;
+  padding-bottom:110px;
+}
+.wrap{max-width:560px;margin:0 auto;padding:16px}
+h1,h2,h3{font-family:var(--display);font-weight:400;line-height:1.05;text-wrap:balance;margin:0}
+button{font:inherit;color:inherit;cursor:pointer}
+button:focus-visible,a:focus-visible,input:focus-visible,textarea:focus-visible{outline:3px solid var(--accent);outline-offset:2px}
+
+/* top bar with plate progress */
+.top{display:flex;align-items:center;gap:12px;padding:12px 16px 0;max-width:560px;margin:0 auto}
+.plate{width:52px;height:52px;border-radius:50%;border:3px solid var(--ink);box-shadow:0 3px 0 var(--ink);position:relative;flex:none;transition:background .4s}
+.plate::after{content:"";position:absolute;inset:9px;border-radius:50%;background:var(--paper);border:2px solid var(--ink)}
+.plate span{position:absolute;inset:0;display:grid;place-items:center;z-index:1;font-family:var(--display);font-size:15px}
+.top .lbl{font-weight:800;font-size:13px;letter-spacing:.08em;text-transform:uppercase;color:var(--muted)}
+.top .lbl b{display:block;color:var(--ink);font-size:16px;letter-spacing:0;text-transform:none}
+
+.card{background:var(--paper);border:3px solid var(--ink);border-radius:22px;box-shadow:0 6px 0 var(--ink);padding:20px}
+.stack{display:flex;flex-direction:column;gap:16px}
+
+/* intro */
+.hello{font-size:clamp(40px,11vw,62px);margin-top:6px}
+.hello em{font-style:normal;color:var(--accent);display:inline-block;transform:rotate(-3deg)}
+.lede{font-size:18px;max-width:34ch;margin:0}
+.flares{display:flex;flex-wrap:wrap;gap:8px}
+.flare{background:var(--paper);border:2px dashed var(--ink);border-radius:999px;padding:5px 12px;font-weight:600;font-size:14px;text-decoration:line-through;text-decoration-thickness:2px;text-decoration-color:var(--accent)}
+.flare:nth-child(odd){transform:rotate(-2deg)}
+.flare:nth-child(3n){transform:rotate(2deg)}
+.how{display:grid;gap:10px;margin:0;padding:0;list-style:none}
+.how li{display:flex;gap:10px;align-items:flex-start}
+.how .n{flex:none;width:28px;height:28px;border-radius:50%;background:var(--ink);color:var(--paper);display:grid;place-items:center;font-weight:800;font-size:14px}
+.big{display:inline-flex;align-items:center;justify-content:center;gap:8px;border:3px solid var(--ink);background:var(--accent);color:#fff;border-radius:999px;padding:14px 26px;font-family:var(--display);font-size:22px;box-shadow:0 5px 0 var(--ink);transition:transform .08s, box-shadow .08s}
+.big:active{transform:translateY(4px);box-shadow:0 1px 0 var(--ink)}
+
+/* step */
+.stepHead{border-radius:22px;border:3px solid var(--ink);box-shadow:0 6px 0 var(--ink);padding:18px 20px;background:var(--c)}
+.stepHead .kicker{font-weight:800;font-size:13px;letter-spacing:.08em;text-transform:uppercase}
+.stepHead h2{font-size:clamp(32px,9vw,44px);margin:4px 0 6px}
+.stepHead p{margin:0;font-weight:600}
+.mode{display:flex;background:var(--paper);border:3px solid var(--ink);border-radius:999px;padding:4px;gap:4px}
+.mode button{flex:1;border:0;background:transparent;border-radius:999px;padding:9px 8px;font-weight:800}
+.mode button[aria-pressed="true"]{background:var(--ink);color:var(--paper)}
+.lineup{display:flex;flex-direction:column;gap:8px}
+.lineup .empty{color:var(--muted);font-weight:600;margin:0}
+.lineup ol{list-style:none;margin:0;padding:0;display:flex;flex-direction:column;gap:6px}
+.lineup li{display:flex;align-items:center;gap:8px;background:var(--c);border:2px solid var(--ink);border-radius:12px;padding:6px 8px;font-weight:600}
+.lineup li .r{flex:none;width:26px;height:26px;border-radius:50%;background:var(--ink);color:var(--paper);display:grid;place-items:center;font-weight:800;font-size:13px}
+.lineup li .t{flex:1;min-width:0}
+.mini{border:2px solid var(--ink);background:var(--paper);border-radius:8px;width:32px;height:30px;font-weight:800;line-height:1;flex:none}
+.mini:disabled{opacity:.3;cursor:default}
+.sectionTitle{display:flex;justify-content:space-between;align-items:baseline;gap:8px}
+.sectionTitle h3{font-size:22px}
+.sectionTitle small{color:var(--muted);font-weight:600}
+
+.group h4{margin:0 0 10px;font-size:15px;font-weight:800;display:flex;align-items:center;gap:6px}
+.chips{display:flex;flex-wrap:wrap;gap:10px}
+.chip{position:relative;display:inline-flex;align-items:center;gap:6px;background:var(--paper);border:2px solid var(--ink);border-radius:999px;padding:8px 14px;font-weight:600;font-size:15px;box-shadow:0 3px 0 var(--ink);transition:transform .08s, box-shadow .08s, background .15s;text-align:left}
+.chip:active{transform:translateY(2px);box-shadow:0 1px 0 var(--ink)}
+.chip.on{background:var(--c);font-weight:800}
+.chip .rk{display:none;position:absolute;top:-10px;right:-8px;min-width:24px;height:24px;padding:0 5px;border-radius:999px;background:var(--ink);color:var(--paper);font-size:12px;font-weight:800;place-items:center;border:2px solid var(--paper)}
+.chip.on .rk{display:grid;animation:pop .25s ease-out}
+.chip.no{background:var(--nope);color:var(--muted);text-decoration:line-through;text-decoration-thickness:2px;box-shadow:0 3px 0 var(--muted);border-color:var(--muted)}
+.chip.no .rk{display:grid;background:var(--accent)}
+.chip.add{border-style:dashed;box-shadow:none;background:transparent}
+@keyframes pop{0%{transform:scale(.3)}70%{transform:scale(1.2)}100%{transform:scale(1)}}
+
+.addRow{display:flex;gap:8px}
+.addRow input{flex:1;min-width:0;border:2px solid var(--ink);border-radius:12px;padding:10px 12px;font:inherit;background:var(--paper)}
+.addRow button{border:2px solid var(--ink);border-radius:12px;background:var(--ink);color:var(--paper);font-weight:800;padding:0 16px}
+
+/* bottom bar */
+.bar{position:fixed;left:0;right:0;bottom:0;padding:12px 16px calc(12px + env(safe-area-inset-bottom));background:var(--paper);border-top:3px solid var(--ink);z-index:5}
+.bar .in{max-width:560px;margin:0 auto;display:flex;align-items:center;gap:10px}
+.bar .count{flex:1;text-align:center;font-weight:800;font-size:14px;color:var(--muted)}
+.navb{border:3px solid var(--ink);border-radius:999px;padding:11px 18px;font-weight:800;background:var(--paper);box-shadow:0 3px 0 var(--ink)}
+.navb.go{background:var(--accent);color:#fff}
+.navb:active{transform:translateY(2px);box-shadow:0 1px 0 var(--ink)}
+.navb[hidden]{display:none}
+
+/* results */
+.dream{text-align:center;background:var(--paper)}
+.bigPlate{width:min(260px,70vw);aspect-ratio:1;margin:6px auto 14px;border-radius:50%;border:4px solid var(--ink);box-shadow:0 6px 0 var(--ink);position:relative}
+.bigPlate::after{content:"";position:absolute;inset:16%;border-radius:50%;background:var(--paper);border:3px solid var(--ink)}
+.bigPlate .center{position:absolute;inset:16%;z-index:1;display:grid;place-items:center;padding:14px;font-family:var(--display);font-size:clamp(16px,4.6vw,22px);line-height:1.1}
+.dishName{font-size:clamp(30px,8.5vw,42px);color:var(--ink)}
+.dishName em{font-style:normal;color:var(--accent)}
+.dishSub{font-size:17px;max-width:36ch;margin:8px auto 0}
+.podiums{display:grid;gap:12px}
+.pod{border:2px solid var(--ink);border-radius:16px;padding:12px 14px;background:var(--paper);border-left:12px solid var(--c)}
+.pod h4{margin:0 0 6px;font-size:15px;font-weight:800}
+.pod ol{margin:0;padding-left:22px}
+.pod .nopes{margin:6px 0 0;color:var(--muted);font-size:14px}
+.pod .none{color:var(--muted);margin:0}
+.share{display:grid;gap:10px}
+.share textarea{width:100%;min-height:160px;border:2px solid var(--ink);border-radius:12px;padding:10px;font:14px/1.4 var(--body);background:#fff;resize:vertical}
+.share .row{display:flex;gap:10px;flex-wrap:wrap}
+.share .row > *{flex:1 1 200px;text-align:center;text-decoration:none}
+.status{font-weight:800;min-height:1.4em;margin:0;color:var(--accent)}
+.fine{color:var(--muted);font-size:14px;margin:0}
+
+@media (prefers-reduced-motion: reduce){
+  *{animation:none!important;transition:none!important}
+}
+</style>
+</head>
+<body>
+<header class="top" id="top" hidden>
+  <div class="plate" id="plate" aria-hidden="true"><span id="plateNum">1</span></div>
+  <div class="lbl" id="topLbl">Course 1 of 7<b>The Base</b></div>
+</header>
+<main class="wrap" id="app"></main>
+<nav class="bar" id="bar" hidden>
+  <div class="in">
+    <button class="navb" id="back" type="button">← Back</button>
+    <div class="count" id="count" aria-live="polite"></div>
+    <button class="navb go" id="next" type="button">Next →</button>
+  </div>
+</nav>
+
+<script>
+const FLARES = ["Gluten","Dairy","Refined / added sugar","Seed oils","Tomatoes","Onions","Highly processed meats","Caffeine","Alcohol"];
+
+const STEPS = [
+  { id:"carbs", kicker:"Carbs", title:"The Base", c:"#ffc94a",
+    blurb:"What goes underneath it all?",
+    groups:[
+      ["Rice","🍚",["Jasmine rice","Basmati rice","White rice","Brown rice","Wild rice","Sushi rice","Coconut rice"]],
+      ["Potatoes & roots","🥔",["Roasted baby potatoes","Baked potato","Dairy-free mashed potatoes","Sweet potato","Sweet potato fries","Crispy air-fried fries","Hash browns","Yuca / cassava fries","Taro","Fried plantains"]],
+      ["Grains","🌾",["Quinoa","Polenta / grits","GF oats","Buckwheat","Millet","Amaranth"]],
+      ["Noodles & pasta","🍜",["Rice noodles","Glass noodles","100% buckwheat soba","Chickpea pasta","Lentil pasta","Brown rice pasta","Kelp noodles"]],
+      ["Wraps & breads","🫓",["Corn tortillas","Cassava tortillas","Almond flour tortillas","GF bread","Rice paper wraps","Arepas","Rice cakes"]],
+      ["Beans & lentils","🫘",["Black beans","Pinto beans","Chickpeas","Lentils","White beans"]]
+    ]},
+  { id:"protein", kicker:"Protein", title:"The Main Event", c:"#ff8a7a",
+    blurb:"The star of the plate.",
+    groups:[
+      ["Chicken & poultry","🍗",["Chicken thighs","Chicken breast","Whole roast chicken","Ground turkey","Fresh roast turkey","Duck"]],
+      ["Beef & lamb","🥩",["Steak","Ground beef","Carne asada","Short ribs","Bison","Lamb"]],
+      ["Pork (fresh, never processed)","🐖",["Pork tenderloin","Pork chops","Carnitas","Pulled pork"]],
+      ["Seafood","🐟",["Salmon","Shrimp","Ahi tuna","White fish (cod)","Halibut","Mahi-mahi","Scallops","Crab","Mussels"]],
+      ["Plant-based & eggs","🥚",["Eggs","Tofu","Tempeh","Edamame"]]
+    ]},
+  { id:"veggies", kicker:"Veggies", title:"The Greens (& Friends)", c:"#8fd16b",
+    blurb:"Pick as many as you like. Order matters!",
+    groups:[
+      ["Leafy greens","🥬",["Spinach","Kale","Arugula","Romaine","Bok choy","Swiss chard","Mixed greens"]],
+      ["Crunchy crucifers","🥦",["Broccoli","Broccolini","Cauliflower","Brussels sprouts","Green cabbage","Purple cabbage"]],
+      ["Roots","🥕",["Carrots","Beets","Parsnips","Radishes"]],
+      ["Squash","🎃",["Zucchini","Butternut squash","Spaghetti squash","Acorn squash","Delicata squash"]],
+      ["Green & snappy","🫛",["Asparagus","Green beans","Snap peas","Peas","Cucumber","Celery"]],
+      ["The rest of the garden","🫑",["Bell peppers","Mushrooms","Eggplant","Corn","Artichoke","Fennel","Jalapeños"]]
+    ]},
+  { id:"flavor", kicker:"Flavor", title:"The Sauce Boss", c:"#c5a3ff",
+    blurb:"Flavor vibes and sauces, all made flare-free.",
+    groups:[
+      ["Flavor vibes","✨",["Garlicky","Lemony & citrusy","Fresh & herby","Smoky","Spicy","Gingery","Warm spices (cumin, turmeric)","Savory umami","Nutty","Tangy"]],
+      ["Sauces","🥣",["Chimichurri","Dairy-free pesto","Guacamole","Avocado crema","Tahini-lemon","Cilantro-lime","Coconut curry","Garlic-ginger coconut aminos","Unsweetened peanut sauce","Mango-jalapeño salsa","Dijon vinaigrette","Lemon-herb olive oil"]]
+    ]},
+  { id:"toppers", kicker:"Extras", title:"The Toppers", c:"#6fd6c6",
+    blurb:"Healthy fats, crunch, fruit and fun stuff on top.",
+    groups:[
+      ["Good fats","🥑",["Avocado","Olives","Olive oil drizzle","Toasted coconut"]],
+      ["Crunch","🥜",["Toasted almonds","Cashews","Pumpkin seeds","Pistachios","Walnuts","Pecans","Hemp hearts"]],
+      ["Fresh herbs","🌿",["Cilantro","Basil","Parsley","Mint","Dill"]],
+      ["Fruit","🥭",["Mango","Pineapple","Berries","Pomegranate","Citrus","Apple","Peach","Figs"]],
+      ["Tangy bits","🥒",["Pickles (no sugar)","Pickled radish","Capers","Sauerkraut","Lime wedge"]]
+    ]},
+  { id:"cuisine", kicker:"Cuisine", title:"Pick a Passport", c:"#7fb6ff",
+    blurb:"Which kitchens make you happiest?",
+    groups:[
+      ["Asia & the Pacific","🥢",["Thai","Japanese","Korean","Vietnamese","Chinese","Indian","Hawaiian"]],
+      ["The Americas","🌮",["Mexican","Peruvian","Brazilian","Caribbean","Southern BBQ","Classic American"]],
+      ["Mediterranean & beyond","🫒",["Greek","Italian","Middle Eastern","Moroccan","Ethiopian","Spanish"]]
+    ]},
+  { id:"style", kicker:"Meal style", title:"Plate It Up", c:"#ffa45c",
+    blurb:"How it's cooked and how it's served.",
+    groups:[
+      ["How it's cooked","🔥",["Grilled","Roasted","Pan-seared","Air-fried","Slow-cooked","Smoked","Stir-fried"]],
+      ["Bowls & plates","🍱",["Rice bowl","Poke bowl","Grain bowl","Protein + 2 sides","Sheet-pan dinner"]],
+      ["Wrapped up","🌯",["Tacos","Burrito bowl","Lettuce wraps","Spring rolls","Burger (GF bun)"]],
+      ["Cozy","🍲",["Soup","Curry","Pho / noodle soup","Stew"]],
+      ["Quick & hot","🍳",["Stir-fry","Fried rice","Skewers","Pasta night","Breakfast hash"]],
+      ["Fresh & cold","🥗",["Big salad","Sushi rolls","Cold noodle salad"]]
+    ]}
+];
+const ADDED = "Your add-ins";
+
+/* ---------- state ---------- */
+const KEY = "maddie-dream-plate-v1";
+let S = fresh();
+function fresh(){
+  const s = {step:-1, mode:"fave", picks:{}, nopes:{}, custom:{}};
+  STEPS.forEach(st=>{s.picks[st.id]=[];s.nopes[st.id]=[];s.custom[st.id]=[];});
+  return s;
+}
+function load(snap){
+  let d = snap && snap.picks ? snap : null;
+  if(!d){ try{ d = JSON.parse(localStorage.getItem(KEY)||"null"); }catch(e){ d=null; } }
+  if(d && d.picks){
+    STEPS.forEach(st=>{
+      S.picks[st.id] = Array.isArray(d.picks[st.id]) ? d.picks[st.id] : [];
+      S.nopes[st.id] = d.nopes && Array.isArray(d.nopes[st.id]) ? d.nopes[st.id] : [];
+      S.custom[st.id] = d.custom && Array.isArray(d.custom[st.id]) ? d.custom[st.id] : [];
+    });
+    S.step = typeof d.step==="number" ? Math.max(-1,Math.min(STEPS.length,d.step)) : -1;
+  }
+}
+function save(){ try{ localStorage.setItem(KEY, JSON.stringify(S)); }catch(e){} }
+
+/* ---------- helpers ---------- */
+const $ = id => document.getElementById(id);
+const esc = s => String(s).replace(/[&<>"']/g, ch=>({"&":"&amp;","<":"&lt;",">":"&gt;",'"':"&quot;","'":"&#39;"}[ch]));
+function groupsOf(st){
+  const g = st.groups.map(x=>x);
+  if(S.custom[st.id].length) g.push([ADDED,"➕",S.custom[st.id]]);
+  return g;
+}
+function topIn(stepId, groupNames, n){
+  const st = STEPS.find(s=>s.id===stepId);
+  const allowed = new Set();
+  groupsOf(st).forEach(([name,,items])=>{ if(!groupNames || groupNames.includes(name)) items.forEach(i=>allowed.add(i)); });
+  const out = S.picks[stepId].filter(p=>allowed.has(p));
+  return n ? out.slice(0,n) : out[0];
+}
+
+/* ---------- plate progress ---------- */
+function paintPlate(el){
+  const seg = 360/STEPS.length;
+  const parts = STEPS.map((st,i)=>{
+    const col = S.picks[st.id].length ? st.c : "#f3efe2";
+    return `${col} ${i*seg}deg ${(i+1)*seg}deg`;
+  });
+  el.style.background = `conic-gradient(${parts.join(",")})`;
+}
+
+/* ---------- views ---------- */
+function render(){
+  const app = $("app");
+  const top = $("top"), bar = $("bar");
+  if(S.step < 0){ top.hidden = true; bar.hidden = true; app.innerHTML = introHTML(); wireIntro(); }
+  else if(S.step >= STEPS.length){ top.hidden = true; bar.hidden = true; app.innerHTML = resultHTML(); wireResult(); }
+  else { top.hidden = false; bar.hidden = false; app.innerHTML = stepHTML(STEPS[S.step]); wireStep(STEPS[S.step]); updateStep(STEPS[S.step]); }
+  save();
+}
+
+function introHTML(){
+  return `<div class="stack">
+    <h1 class="hello">Hi Maddie! Let's find your <em>favorite meal.</em></h1>
+    <p class="lede">Seven quick rounds of tapping on food. At the end you get your dream plate.</p>
+    <div class="card stack">
+      <h3 style="font-size:22px">Already off the menu</h3>
+      <p class="fine" style="margin-top:-8px">Every option here can be made without any of these:</p>
+      <div class="flares">${FLARES.map(f=>`<span class="flare">${esc(f)}</span>`).join("")}</div>
+    </div>
+    <div class="card">
+      <ul class="how">
+        <li><span class="n">1</span><span><b>Tap your favorites in order.</b> First tap is #1, next is #2, and so on. Pick as many as you want.</span></li>
+        <li><span class="n">2</span><span><b>Switch to "Nope" mode</b> to cross off anything you just don't like.</span></li>
+        <li><span class="n">3</span><span><b>Missing something?</b> Add your own at the bottom of each round.</span></li>
+      </ul>
+    </div>
+    <div><button class="big" id="start" type="button">${anyPicks() ? "Keep going →" : "Let's eat →"}</button></div>
+  </div>`;
+}
+function anyPicks(){ return STEPS.some(st=>S.picks[st.id].length||S.nopes[st.id].length); }
+function wireIntro(){
+  $("start").onclick = ()=>{ S.step = 0; render(); window.scrollTo(0,0); };
+}
+
+function stepHTML(st){
+  const groups = groupsOf(st);
+  return `<div class="stack" style="--c:${st.c}">
+    <div class="stepHead">
+      <div class="kicker">Round ${S.step+1} of ${STEPS.length} · ${esc(st.kicker)}</div>
+      <h2>${esc(st.title)}</h2>
+      <p>${esc(st.blurb)}</p>
+    </div>
+    <div class="mode" role="group" aria-label="Tap mode">
+      <button type="button" id="mFave" aria-pressed="${S.mode==="fave"}">😍 Faves</button>
+      <button type="button" id="mNope" aria-pressed="${S.mode==="nope"}">🙅 Nopes</button>
+    </div>
+    <div class="card lineup">
+      <div class="sectionTitle"><h3>Your ranking</h3><small>↑ moves it up</small></div>
+      <div id="lineup"></div>
+    </div>
+    ${groups.map(([name,emo,items])=>`
+      <section class="card group">
+        <h4><span aria-hidden="true">${emo}</span>${esc(name)}</h4>
+        <div class="chips">${items.map(it=>`<button type="button" class="chip" data-k="${esc(it)}">${esc(it)}<span class="rk"></span></button>`).join("")}</div>
+      </section>`).join("")}
+    <section class="card group">
+      <h4><span aria-hidden="true">➕</span>Something we missed?</h4>
+      <form class="addRow" id="addForm">
+        <input id="addIn" type="text" maxlength="40" placeholder="Type a food" aria-label="Add your own food">
+        <button type="submit">Add</button>
+      </form>
+    </section>
+  </div>`;
+}
+function wireStep(st){
+  $("mFave").onclick = ()=>{ S.mode="fave"; $("mFave").setAttribute("aria-pressed","true"); $("mNope").setAttribute("aria-pressed","false"); save(); };
+  $("mNope").onclick = ()=>{ S.mode="nope"; $("mNope").setAttribute("aria-pressed","true"); $("mFave").setAttribute("aria-pressed","false"); save(); };
+  document.querySelectorAll(".chip[data-k]").forEach(b=>{
+    b.onclick = ()=>{ tap(st, b.dataset.k); };
+  });
+  $("addForm").onsubmit = e=>{
+    e.preventDefault();
+    const v = $("addIn").value.trim();
+    if(!v) return;
+    const exists = groupsOf(st).some(([,,items])=>items.some(i=>i.toLowerCase()===v.toLowerCase()));
+    if(!exists) S.custom[st.id].push(v);
+    const name = exists ? groupsOf(st).flatMap(g=>g[2]).find(i=>i.toLowerCase()===v.toLowerCase()) : v;
+    S.nopes[st.id] = S.nopes[st.id].filter(x=>x!==name);
+    if(!S.picks[st.id].includes(name)) S.picks[st.id].push(name);
+    const y = window.scrollY;
+    render();
+    window.scrollTo(0,y);
+  };
+  $("back").onclick = ()=>{ S.step--; render(); window.scrollTo(0,0); };
+  $("next").onclick = ()=>{ S.step++; render(); window.scrollTo(0,0); };
+}
+function tap(st, k){
+  const p = S.picks[st.id], n = S.nopes[st.id];
+  if(S.mode==="fave"){
+    if(p.includes(k)) S.picks[st.id] = p.filter(x=>x!==k);
+    else { S.nopes[st.id] = n.filter(x=>x!==k); p.push(k); }
+  } else {
+    if(n.includes(k)) S.nopes[st.id] = n.filter(x=>x!==k);
+    else { S.picks[st.id] = p.filter(x=>x!==k); n.push(k); }
+  }
+  updateStep(st); save();
+}
+function updateStep(st){
+  const p = S.picks[st.id], n = S.nopes[st.id];
+  document.querySelectorAll(".chip[data-k]").forEach(b=>{
+    const k = b.dataset.k, r = p.indexOf(k), no = n.includes(k);
+    b.classList.toggle("on", r>-1);
+    b.classList.toggle("no", no);
+    b.setAttribute("aria-pressed", r>-1 ? "true" : "false");
+    b.querySelector(".rk").textContent = r>-1 ? (r+1) : (no ? "✕" : "");
+    b.setAttribute("aria-label", k + (r>-1 ? `, ranked ${r+1}` : no ? ", marked nope" : ""));
+  });
+  const L = $("lineup");
+  if(!p.length){
+    L.innerHTML = `<p class="empty">Nothing yet. Tap a food below to make it #1.</p>`;
+  } else {
+    L.innerHTML = `<ol>${p.map((k,i)=>`<li><span class="r">${i+1}</span><span class="t">${esc(k)}</span>
+      <button type="button" class="mini" data-up="${i}" aria-label="Move ${esc(k)} up" ${i===0?"disabled":""}>↑</button>
+      <button type="button" class="mini" data-rm="${i}" aria-label="Remove ${esc(k)}">✕</button></li>`).join("")}</ol>`;
+    L.querySelectorAll("[data-up]").forEach(b=>b.onclick=()=>{
+      const i=+b.dataset.up; if(i<1) return;
+      [p[i-1],p[i]]=[p[i],p[i-1]]; updateStep(st); save();
+    });
+    L.querySelectorAll("[data-rm]").forEach(b=>b.onclick=()=>{
+      p.splice(+b.dataset.rm,1); updateStep(st); save();
+    });
+  }
+  // top + bar
+  paintPlate($("plate"));
+  $("plateNum").textContent = S.step+1;
+  $("topLbl").innerHTML = `Round ${S.step+1} of ${STEPS.length}<b>${esc(st.kicker)}</b>`;
+  $("back").textContent = S.step===0 ? "← Intro" : "← Back";
+  $("next").textContent = S.step===STEPS.length-1 ? "My plate 🍽" : "Next →";
+  $("count").textContent = `${p.length} picked${n.length?` · ${n.length} nope`:""}`;
+}
+
+/* ---------- dream dish ---------- */
+const clean = s => s ? s.replace(/\s*\(.*?\)\s*/g," ").split(" / ")[0].trim() : s;
+const FORMAT = {"Protein + 2 sides":"Plate","Burger (GF bun)":"Burger","Pho / noodle soup":"Noodle Soup","Pasta night":"Pasta","Breakfast hash":"Hash","Sheet-pan dinner":"Sheet-Pan Dinner","Big salad":"Salad","Cold noodle salad":"Noodle Salad"};
+const titleCase = s => s.replace(/\b([a-z])/g, m=>m.toUpperCase());
+function dish(){
+  const cuisine = topIn("cuisine");
+  const method = topIn("style",["How it's cooked"]);
+  const formatRaw = topIn("style", STEPS[6].groups.map(g=>g[0]).filter(g=>g!=="How it's cooked").concat([ADDED]));
+  const protein = topIn("protein");
+  const carb = topIn("carbs");
+  const vegs = topIn("veggies", null, 2);
+  const sauce = topIn("flavor",["Sauces",ADDED]);
+  const vibe = topIn("flavor",["Flavor vibes"]);
+  const tops = topIn("toppers", null, 2);
+  if(!protein && !carb && !vegs.length) return null;
+  const format = formatRaw ? (FORMAT[formatRaw] || clean(formatRaw)) : "";
+  const nameParts = [
+    cuisine ? clean(cuisine)+"-Style" : "",
+    method || "",
+    protein ? clean(protein) : "",
+    format || (protein ? "" : "Bowl")
+  ].filter(Boolean);
+  const name = titleCase(nameParts.join(" "));
+  const bits = [];
+  if(carb) bits.push(`over ${clean(carb).toLowerCase()}`);
+  if(vegs.length) bits.push(`with ${vegs.map(v=>clean(v).toLowerCase()).join(" & ")}`);
+  let sub = bits.join(" ");
+  if(sauce) sub += `${sub?", ":""}finished with ${clean(sauce).toLowerCase()}`;
+  if(tops.length) sub += `${sub?", ":""}topped with ${tops.map(t=>clean(t).toLowerCase()).join(" + ")}`;
+  if(vibe) sub += `${sub?". ":""}Flavor vibe: ${clean(vibe).toLowerCase()}`;
+  sub = sub ? sub.charAt(0).toUpperCase()+sub.slice(1)+"." : "";
+  return {name, sub};
+}
+
+function summaryText(){
+  const d = dish();
+  const lines = ["Maddie's food survey 🍽"];
+  if(d){ lines.push("", "DREAM PLATE: "+d.name, d.sub); }
+  STEPS.forEach(st=>{
+    const p = S.picks[st.id], n = S.nopes[st.id];
+    lines.push("", st.kicker.toUpperCase()+":");
+    lines.push(p.length ? p.map((x,i)=>`${i+1}. ${x}`).join("\n") : "(no picks)");
+    if(n.length) lines.push("Nope: "+n.join(", "));
+  });
+  return lines.join("\n");
+}
+
+function resultHTML(){
+  const d = dish();
+  const allSeg = 360/STEPS.length;
+  const grad = STEPS.map((st,i)=>`${S.picks[st.id].length?st.c:"#f3efe2"} ${i*allSeg}deg ${(i+1)*allSeg}deg`).join(",");
+  return `<div class="stack">
+    <div class="card dream">
+      <div class="bigPlate" style="background:conic-gradient(${grad})"><div class="center">${d ? "Chef's<br>kiss" : "Still<br>empty"}</div></div>
+      <div style="font-weight:800;letter-spacing:.08em;text-transform:uppercase;font-size:13px;color:var(--muted)">Maddie's dream plate</div>
+      ${d ? `<h1 class="dishName">${esc(d.name)}</h1><p class="dishSub">${esc(d.sub)}</p>`
+          : `<h1 class="dishName">Not enough picks yet</h1><p class="dishSub">Go back and tap a few foods. The plate builds from your #1s.</p>`}
+    </div>
+    <div class="card share">
+      <h3 style="font-size:24px">Send it to Parker</h3>
+      ${SHEET_URL && anyPicks() ? `<p class="status" id="autoStatus" aria-live="polite">Sending your answers to Parker…</p>` : ""}
+      <p class="fine" style="margin-top:-4px">${SHEET_URL ? "Backup plan: copy your answers into a text, or tap the text button." : "Copy your answers and paste them into a text, or tap the text button."}</p>
+      <div class="row">
+        <button type="button" class="big" id="copy" style="font-size:19px">Copy answers</button>
+        <a class="navb" id="sms" href="sms:?&body=${encodeURIComponent(summaryText())}" style="display:inline-flex;align-items:center;justify-content:center;color:var(--ink)">Open in Messages</a>
+      </div>
+      <p class="status" id="status" aria-live="polite"></p>
+      <label for="sumBox" class="fine">Your answers</label>
+      <textarea id="sumBox" readonly>${esc(summaryText())}</textarea>
+    </div>
+    <div class="podiums">
+      ${STEPS.map(st=>{
+        const p=S.picks[st.id], n=S.nopes[st.id];
+        return `<div class="pod" style="--c:${st.c}"><h4>${esc(st.kicker)} · ${esc(st.title)}</h4>
+          ${p.length?`<ol>${p.map(x=>`<li>${esc(x)}</li>`).join("")}</ol>`:`<p class="none">No picks</p>`}
+          ${n.length?`<p class="nopes">🙅 ${n.map(esc).join(", ")}</p>`:""}</div>`;
+      }).join("")}
+    </div>
+    <div class="row" style="display:flex;gap:10px;flex-wrap:wrap">
+      <button type="button" class="navb" id="edit">← Change answers</button>
+      <button type="button" class="navb" id="restart">Start over</button>
+    </div>
+    <p class="status" id="restartMsg" aria-live="polite"></p>
+  </div>`;
+}
+function wireResult(){
+  $("copy").onclick = async ()=>{
+    const t = summaryText();
+    try{ await navigator.clipboard.writeText(t); $("status").textContent = "Copied! Paste it into your text to Parker."; }
+    catch(e){
+      const box = $("sumBox"); box.focus(); box.select();
+      $("status").textContent = "Your answers are selected below. Copy them with your keyboard or long-press.";
+    }
+  };
+  $("edit").onclick = ()=>{ S.step = STEPS.length-1; render(); window.scrollTo(0,0); };
+  let armed = false;
+  $("restart").onclick = ()=>{
+    if(!armed){ armed = true; $("restart").textContent = "Tap again to erase everything"; $("restartMsg").textContent = "This clears all your picks."; return; }
+    S = fresh(); render(); window.scrollTo(0,0);
+  };
+  autoSend();
+}
+
+/* ---------- auto-save to Parker's Google Sheet ---------- */
+// Apps Script web app URL (ends in /exec). Leave empty to turn auto-save off.
+const SHEET_URL = "";
+const SENT_KEY = KEY + ":sent";
+async function autoSend(){
+  if(!SHEET_URL || !anyPicks()) return;
+  const say = msg => { const el = $("autoStatus"); if(el) el.textContent = msg; };
+  const body = JSON.stringify({ dish: dish(), picks: S.picks, nopes: S.nopes, custom: S.custom, summary: summaryText() });
+  let last = null; try{ last = localStorage.getItem(SENT_KEY); }catch(e){}
+  if(last === body){ say("✓ Parker already has these answers."); return; }
+  try{
+    // text/plain keeps this a "simple" request, so the browser skips the CORS preflight Apps Script can't answer.
+    const r = await fetch(SHEET_URL, { method:"POST", headers:{"Content-Type":"text/plain;charset=utf-8"}, body });
+    const j = await r.json();
+    if(!j.ok) throw new Error(j.error || "not saved");
+    try{ localStorage.setItem(SENT_KEY, body); }catch(e){}
+    say("✓ Sent! Parker's got your answers.");
+  }catch(e){
+    say("Couldn't send automatically. Tap a button below to text Parker instead.");
+  }
+}
+
+/* ---------- boot ---------- */
+function start(data){
+  load(data);
+  render();
+}
+try{ window.claude?.hot?.snapshot?.(()=>JSON.parse(JSON.stringify(S))); }catch(e){}
+window.claude?.hot?.ready ? window.claude.hot.ready(start) : start(window.claude?.hot?.data ?? {});
+</script>
+</body>
+</html>
